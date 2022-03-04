@@ -7,7 +7,9 @@ const Button = ({text, onClick}) => {
     </button>
   )
 }
-
+const StatisticsLine = ({text, value, sufix}) => {
+  return <h3>{text} {value}{sufix}</h3>
+}
 const Feedback = ({good,setGood,bad,setBad,neutral,setNeutral}) => {
   return (
   <> 
@@ -26,12 +28,12 @@ const Statistics = ({good,neutral,bad}) => {
   return (
     <>
     <h1>statistics</h1>
-    <h3>good {good}</h3>
-    <h3>neutral {neutral}</h3>
-    <h3>bad {bad}</h3>
-    <h3>all {all}</h3>
-    <h3>average {(good - bad)/all}</h3>
-    <h3>positive {good * 100/all} %</h3>
+    <StatisticsLine text={'good'} value={good}/>
+    <StatisticsLine text={'neutral'} value={neutral}/>
+    <StatisticsLine text={'bad'} value={bad}/>
+    <StatisticsLine text={'all'} value={all}/>
+    <StatisticsLine text={'average'} value={(good - bad)/all}/>
+    <StatisticsLine text={'positive'} value={good * 100/all} sufix={'%'}/>
     </>
   )
   
