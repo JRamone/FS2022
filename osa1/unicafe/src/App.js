@@ -20,6 +20,7 @@ const Feedback = ({good,setGood,bad,setBad,neutral,setNeutral}) => {
 }
 
 const Statistics = ({good,neutral,bad}) => {
+  //I ALREADY ME THIS!
   return (
     <>
     <h1>statistics</h1>
