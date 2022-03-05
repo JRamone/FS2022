@@ -16,8 +16,17 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Uint8Array(anecdotes.length))
+
   const randomize_index = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length))
+  }
+
+  const vote = (index) => {
+    const copy = [...points]
+    copy[index] += 1
+    setPoints(copy)
+    //console.log(points)
   }
 
   return (
@@ -27,6 +36,7 @@ const App = () => {
     </div>
     <div>
       <button onClick={() => randomize_index()}>next anecdote</button>
+      <button onClick={() => vote(selected)}>vote</button>
     </div>
     </>
   );
