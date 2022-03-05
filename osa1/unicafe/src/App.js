@@ -8,7 +8,13 @@ const Button = ({text, onClick}) => {
   )
 }
 const StatisticsLine = ({text, value, sufix}) => {
-  return <h3>{text} {value}{sufix}</h3>
+  return (
+  <tr>
+    <td width={120}>{text}</td><td width={120}> {value}{sufix}</td>
+  </tr>
+  )
+  
+  
 }
 const Feedback = ({good,setGood,bad,setBad,neutral,setNeutral}) => {
   return (
@@ -22,18 +28,26 @@ const Feedback = ({good,setGood,bad,setBad,neutral,setNeutral}) => {
 }
 
 const Statistics = ({good,neutral,bad}) => {
-  //I ALREADY ME THIS!
+  //I ALREADY MADE THIS!
   let all = good + bad + neutral
   if (all == 0) return <h1>no feedback given</h1>
   return (
     <>
-    <h1>statistics</h1>
-    <StatisticsLine text={'good'} value={good}/>
-    <StatisticsLine text={'neutral'} value={neutral}/>
-    <StatisticsLine text={'bad'} value={bad}/>
-    <StatisticsLine text={'all'} value={all}/>
-    <StatisticsLine text={'average'} value={(good - bad)/all}/>
-    <StatisticsLine text={'positive'} value={good * 100/all} sufix={'%'}/>
+    <table>
+      <thead>
+        <tr>
+          <th style={{fontSize: 40}} >statistics</th>
+        </tr>
+      </thead>
+      <tbody>
+            <StatisticsLine text={'good'} value={good}/>
+            <StatisticsLine text={'neutral'} value={neutral}/>
+            <StatisticsLine text={'bad'} value={bad}/>
+            <StatisticsLine text={'all'} value={all}/>
+            <StatisticsLine text={'average'} value={(good - bad)/all}/>
+            <StatisticsLine text={'positive'} value={good * 100/all} sufix={'%'}/>
+      </tbody>
+    </table>
     </>
   )
   
