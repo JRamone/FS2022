@@ -17,7 +17,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Uint8Array(anecdotes.length))
-
+  const [best, setBest] = useState(0)
   const randomize_index = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length))
   }
@@ -26,17 +26,23 @@ const App = () => {
     const copy = [...points]
     copy[index] += 1
     setPoints(copy)
-    //console.log(points)
+    const index_of_best = points.indexOf((Math.max(...points)))
+    setBest(index_of_best)
   }
 
   return (
     <>
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
     </div>
     <div>
       <button onClick={() => randomize_index()}>next anecdote</button>
       <button onClick={() => vote(selected)}>vote</button>
+    </div>
+    <div>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[best]}
     </div>
     </>
   );
