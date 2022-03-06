@@ -9,6 +9,10 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
+    if (persons.map(p => p.name).includes(newName)){
+      window.alert(`${newName} is already on the list!`)
+      return
+    }
     setPersons(persons.concat({name : newName}))
     setNewName('')
     console.log('hello');
