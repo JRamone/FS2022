@@ -21,7 +21,7 @@ const App = () => {
       <>
       <div>find countries</div><input onChange={(e) => setFilter(e.target.value.toLowerCase())}></input>
       <ul style={{listStyleType : 'none'}}>
-        <ListCountries countries={data} filter={filter}/>
+        <ListCountries countries={data} filter={filter} setFilter={setFilter}/>
       </ul>
       </>
     )
@@ -36,7 +36,7 @@ const App = () => {
   
 }
 
-const ListCountries = ({filter,countries}) => {
+const ListCountries = ({setFilter,filter,countries}) => {
   let countries_to_show = countries.filter(c => c.name.official.toLowerCase().includes(filter))
   //console.log(countries_to_show);
   if (countries_to_show.length === 1){
@@ -51,7 +51,7 @@ const ListCountries = ({filter,countries}) => {
   } else {
     return (
       <>
-      {countries_to_show.map(c => <li key={c.name.common}>{c.name.common}</li>)}
+      {countries_to_show.map(c => <li key={c.name.common}>{c.name.common}<button onClick={() => setFilter(c.name.common.toLowerCase())}>Show</button></li>)}
       </>
     )
   }
