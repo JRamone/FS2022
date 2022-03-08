@@ -34,6 +34,7 @@ const App = () => {
   }
   
   
+  
 }
 
 const ListCountries = ({setFilter,filter,countries}) => {
@@ -41,7 +42,10 @@ const ListCountries = ({setFilter,filter,countries}) => {
   //console.log(countries_to_show);
   if (countries_to_show.length === 1){
     return (
+      <>
       <ShowCountry country={countries_to_show[0]}/>
+      <Weather country={countries_to_show[0]}/>
+      </>
     )
   }
   else if (countries_to_show.length > 10){
@@ -78,6 +82,17 @@ const ShowCountry = ({country}) => {
   )
 }
 
+const Weather = ({country}) => {
+  const apikey = process.env.APIKEY
+  useEffect(() => {
+    axios.get()
 
+  },[])
+  return(
+    <>
+    <h2>weather in {country.capital}</h2>
+    </>
+  )
+}
 
 export default App;
