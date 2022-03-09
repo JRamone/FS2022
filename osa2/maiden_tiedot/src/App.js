@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import axios from 'axios'
+
 
 const App = () => {
 
@@ -15,14 +15,13 @@ const App = () => {
 
   const [data,setData] = useState()
   const [filter,setFilter] = useState('')
-  const [weather,setWeather] = useState('')
 
   if (data) {
     return(
       <>
       <div>find countries</div><input onChange={(e) => setFilter(e.target.value.toLowerCase())}></input>
       <ul style={{listStyleType : 'none'}}>
-        <ListCountries weather={weather} setWeather={setWeather} countries={data} filter={filter} setFilter={setFilter}/>
+        <ListCountries countries={data} filter={filter} setFilter={setFilter}/>
       </ul>
       </>
     )
@@ -38,14 +37,14 @@ const App = () => {
   
 }
 
-const ListCountries = ({weather,setWeather, setFilter,filter,countries}) => {
+const ListCountries = ({setFilter,filter,countries}) => {
   let countries_to_show = countries.filter(c => c.name.official.toLowerCase().includes(filter))
   //console.log(countries_to_show);
   if (countries_to_show.length === 1){
     return (
       <>
       <ShowCountry country={countries_to_show[0]}/>
-      <Weather country={countries_to_show[0],weather={weather}, setWeather={setWeather}}/>
+      <Weather country={countries_to_show[0]}/>
       </>
     )
   }
@@ -83,22 +82,15 @@ const ShowCountry = ({country}) => {
   )
 }
 
-const Weather = ({weather,setWeather,country}) => {
-  const apikey = process.env.REACT_APP_API_KEY
-  const lat = country.capitalInfo.latlng[0]
-  const lon = country.capitalInfo.latlng[1]
-  //console.log(country.capitalInfo.latlng[0])
-  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`
-  //console.log(url)
+const Weather = ({country}) => {
+  const apikey = process.env.APIKEY
   useEffect(() => {
-    const promise = axios.get(url)
-    .then(r => setWeather(r.data))
+    axios.get()
 
-  },[country])
+  },[])
   return(
     <>
     <h2>weather in {country.capital}</h2>
-    <div>temperature {} celsius</div>
     </>
   )
 }

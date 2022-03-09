@@ -1,6 +1,6 @@
 
 import { useState,useEffect } from 'react'
-import axios from 'axios'
+import notes from './services/notes'
 
 const Filter = ({filter, setFilter}) => {
   return (
