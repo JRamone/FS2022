@@ -1,6 +1,6 @@
 
 import { useState,useEffect } from 'react'
-import notes from './services/notes'
+import personService from './services/persons'
 
 const Filter = ({filter, setFilter}) => {
   return (
@@ -50,22 +50,17 @@ const Persons = ({persons,filter}) => {
 
 const App = () => {
 
-  useEffect(() => {
-    const handler = (response) => {
-      setPersons(response.data.persons)
-    }
-
-    axios.get('http://localhost:3001/db')
-      .then(handler)
-    
-    
-  }, [])
-  
-
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter,setFilter] = useState('')
+
+  useEffect(() => {
+      console.log(personService
+        .getAll())
+        //.then(r => setPersons(r.data.persons))
+  }
+  ,[])
 
   return (
     <div>
