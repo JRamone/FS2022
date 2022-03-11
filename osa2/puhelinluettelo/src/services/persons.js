@@ -1,22 +1,15 @@
 import axios from "axios";
 
-const url = 'http://localhost:3001/db'
-let id_counter;
+const url = 'http://localhost:3001/persons'
 
 const getAll = () => {
-    const initial_persons = axios.get(url).then(r => r.data.persons)
-    console.log(initial_persons);
-    return initial_persons
+    const request = axios.get(url)
+    return request.then(r => r.data)
 }
 
-const addNumber = (name, number) => {
-    const newPerson = {
-        name,
-        number,
-        id : id_counter
-    }
-    id_counter +=1
-    const promise = axios.post(url, newPerson)
+const addNumber = (personObject) => {
+    const request = axios.post(url, personObject)
+    return request.then(r => r.data)
 }
 
 

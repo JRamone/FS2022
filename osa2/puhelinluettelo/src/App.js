@@ -11,16 +11,26 @@ const Filter = ({filter, setFilter}) => {
   )
 }
 const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumber}) => {
+
   const addPerson = (event) => {
+
     event.preventDefault()
     if (persons.map(p => p.name).includes(newName)){
       window.alert(`${newName} is already on the list!`)
       return
     }
-    setPersons(persons.concat({name : newName, number : newNumber}))
+    
+    const personObject = {
+      name: newName,
+      number: newNumber
+    }
+
+    personService
+      .addNumber(personObject)
+      .then(r => console.log(r))
+    setPersons(persons.concat(personObject))
     setNewName('')
     setNewNumber('')
-    console.log('hello');
   }
   return(
   <>
@@ -56,9 +66,9 @@ const App = () => {
   const [filter,setFilter] = useState('')
 
   useEffect(() => {
-      console.log(personService
-        .getAll())
-        //.then(r => setPersons(r.data.persons))
+      personService
+        .getAll()
+        .then(initialPersons => setPersons(initialPersons))
   }
   ,[])
 
