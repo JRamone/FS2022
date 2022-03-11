@@ -27,8 +27,7 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
 
     personService
       .addNumber(personObject)
-      .then(r => console.log(r))
-    setPersons(persons.concat(personObject))
+      .then(r => setPersons(persons.concat(r)))
     setNewName('')
     setNewNumber('')
   }
@@ -52,13 +51,17 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
 const Persons = ({persons,setPersons,filter}) => {
 
   const handleDelete = (e) => {
-
-    personService
-      .deleteNumber(e.target.value)
-      .then(console.log(`id ${e.target.value} successfully deleted`))
-    personService
-      .getAll()
-      .then(updatedPersons => setPersons(updatedPersons))
+    console.log(e.target.value)
+    const sure = window.confirm(`Are you sure?`)
+    if (sure){
+      personService
+        .deleteNumber(e.target.value)
+        .then(console.log(`id ${e.target.value} successfully deleted`))
+      personService
+        .getAll()
+        .then(updatedPersons => setPersons(updatedPersons))
+    }
+    
   
   }
 
