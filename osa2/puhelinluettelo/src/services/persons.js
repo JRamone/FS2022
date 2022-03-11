@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Palvelimen toiminnallisuudesta vastaava moduuli.
 const url = 'http://localhost:3001/persons'
 
 const getAll = () => {
