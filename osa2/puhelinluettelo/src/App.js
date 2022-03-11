@@ -19,7 +19,7 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
       window.alert(`${newName} is already on the list!`)
       return
     }
-    
+
     const personObject = {
       name: newName,
       number: newNumber
@@ -48,11 +48,24 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
   </>
   )
 }
-const Persons = ({persons,filter}) => {
+
+const Persons = ({persons,setPersons,filter}) => {
+
+  const handleDelete = (e) => {
+
+    personService
+      .deleteNumber(e.target.value)
+      .then(console.log(`id ${e.target.value} successfully deleted`))
+    personService
+      .getAll()
+      .then(updatedPersons => setPersons(updatedPersons))
+  
+  }
+
   return(
     <>
       <ul style={{listStyleType : 'none'}}>
-        {persons.filter(p => p.name.toLowerCase().includes(filter)).map(person => <li key={person.name}>{person.name} {person.number}</li>)}
+        {persons.filter(p => p.name.toLowerCase().includes(filter)).map(person => <li key={person.name}>{person.name} {person.number}<button value={person.id} onClick={handleDelete}>Delete</button></li>)}
       </ul>
     </>
   )
@@ -78,7 +91,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <PersonForm persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter}/>
+      <Persons setPersons={setPersons} persons={persons} filter={filter}/>
     </div>
   )
 

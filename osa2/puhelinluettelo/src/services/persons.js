@@ -13,8 +13,14 @@ const addNumber = (personObject) => {
     return request.then(r => r.data)
 }
 
+const deleteNumber = (id) => {
+    const request = axios.delete(`${url}/${id}`)
+    return request.then(r => r.data)
+}
+
 
 export default {
+    deleteNumber,
     getAll,
     addNumber
 }
