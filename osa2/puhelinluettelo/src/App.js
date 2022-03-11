@@ -15,8 +15,17 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
   const addPerson = (event) => {
 
     event.preventDefault()
+
     if (persons.map(p => p.name).includes(newName)){
-      window.alert(`${newName} is already on the list!`)
+      const replace = window.confirm(`${newName} is already on the list, replace the old number with a new one?`)
+      if (replace) {
+        const updated_person = {...persons.find(p => p.name === newName), number:newNumber}
+        personService
+          .updateNumber(updated_person)
+        personService
+          .getAll()
+          .then(updatedPersons => setPersons(updatedPersons))
+      }
       return
     }
 
