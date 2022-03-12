@@ -1,6 +1,7 @@
 
 import { useState,useEffect } from 'react'
 import personService from './services/persons'
+import Notification from './components/notification'
 
 const Filter = ({filter, setFilter}) => {
   return (
@@ -89,6 +90,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter,setFilter] = useState('')
+  const [message,setMessage] = useState({})
 
   useEffect(() => {
       personService
@@ -101,6 +103,7 @@ const App = () => {
     <div>
       <Filter filter={filter} setFilter={setFilter}/>
       <h2>Phonebook</h2>
+      <Notification message={message} setMessage={setMessage}/>
       <PersonForm persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
       <Persons setPersons={setPersons} persons={persons} filter={filter}/>
