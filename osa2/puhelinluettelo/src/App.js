@@ -1,7 +1,7 @@
 
 import { useState,useEffect } from 'react'
 import personService from './services/persons'
-import Notification from './components/notification'
+import {Notification} from './components/notification'
 
 const Filter = ({filter, setFilter}) => {
   return (
@@ -67,6 +67,7 @@ const Persons = ({persons,setPersons,filter}) => {
       personService
         .deleteNumber(e.target.value)
         .then(console.log(`id ${e.target.value} successfully deleted`))
+        .then(Notification.notify({type:'error',content:'deletion successful'}))
       personService
         .getAll()
         .then(updatedPersons => setPersons(updatedPersons))
@@ -90,8 +91,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter,setFilter] = useState('')
-  const [message,setMessage] = useState({})
-
+  
   useEffect(() => {
       personService
         .getAll()
@@ -103,7 +103,7 @@ const App = () => {
     <div>
       <Filter filter={filter} setFilter={setFilter}/>
       <h2>Phonebook</h2>
-      <Notification message={message} setMessage={setMessage}/>
+      <Notification />
       <PersonForm persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
       <Persons setPersons={setPersons} persons={persons} filter={filter}/>

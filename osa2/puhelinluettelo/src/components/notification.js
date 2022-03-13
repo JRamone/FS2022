@@ -1,14 +1,32 @@
+import { useState } from "react"
 
-const Notification = ({message,setMessage}) => {
+const Notification = () => {
+
+    const notify = (message) => {
+        setMessage(message)
+    }
+
+    const [message,setMessage] = useState({type:'error',content:''})
+
+    const errorStyle = {
+        color:'red',
+        padding:200
+    }
+
+    const successStyle = {
+        color:'green',
+        padding:500
+    }
+
 
     if(message.content === ''){
-        return null
+        return <></>
     }
 
     else if (message.type === 'error') {
         return (
             <>
-                <div>error</div>
+                <div style={errorStyle}>{message.content}</div>
             </>
         )
     }
@@ -16,12 +34,13 @@ const Notification = ({message,setMessage}) => {
     else if (message.type === 'success') {
         return (
             <>
-                <div>success</div>
+                <div style={errorStyle}>{message.content}</div>
             </>
         )
     }
+    
 }
 
-export default {
-    Notification
-}
+export {Notification}
+
+    
