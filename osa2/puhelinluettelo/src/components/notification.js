@@ -1,21 +1,12 @@
-import { useState } from "react"
 
-const Notification = () => {
-
-    const notify = (message) => {
-        setMessage(message)
-    }
-
-    const [message,setMessage] = useState({type:'error',content:''})
+const Notification = ({message}) => {
 
     const errorStyle = {
         color:'red',
-        padding:200
     }
 
     const successStyle = {
         color:'green',
-        padding:500
     }
 
 
@@ -34,7 +25,7 @@ const Notification = () => {
     else if (message.type === 'success') {
         return (
             <>
-                <div style={errorStyle}>{message.content}</div>
+                <div style={successStyle}>{message.content}</div>
             </>
         )
     }

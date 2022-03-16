@@ -58,7 +58,7 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
   )
 }
 
-const Persons = ({persons,setPersons,filter}) => {
+const Persons = ({persons,setPersons,filter,setMessage}) => {
 
   const handleDelete = (e) => {
     console.log(e.target.value)
@@ -67,7 +67,8 @@ const Persons = ({persons,setPersons,filter}) => {
       personService
         .deleteNumber(e.target.value)
         .then(console.log(`id ${e.target.value} successfully deleted`))
-        .then(Notification.notify({type:'error',content:'deletion successful'}))
+        .then(setMessage({type:'success',content:`id ${e.target.value} successfully deleted`}))
+      setTimeout(() => setMessage({type:'success',content:''}),5000)
       personService
         .getAll()
         .then(updatedPersons => setPersons(updatedPersons))
@@ -91,6 +92,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter,setFilter] = useState('')
+  const [message,setMessage] = useState({type:'error',content:''})
   
   useEffect(() => {
       personService
@@ -103,10 +105,10 @@ const App = () => {
     <div>
       <Filter filter={filter} setFilter={setFilter}/>
       <h2>Phonebook</h2>
-      <Notification />
+      <Notification message={message}/>
       <PersonForm persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
-      <Persons setPersons={setPersons} persons={persons} filter={filter}/>
+      <Persons setMessage={setMessage} setPersons={setPersons} persons={persons} filter={filter}/>
     </div>
   )
 
