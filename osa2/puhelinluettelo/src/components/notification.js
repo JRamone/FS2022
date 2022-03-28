@@ -8,7 +8,7 @@ const Notification = ({message}) => {
         textAlign: 'center',
         color:'red',
         backgroundColor:'Gainsboro',
-        border:'3px solid green'
+        border:'3px solid red'
     }
 
     const successStyle = {

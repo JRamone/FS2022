@@ -22,10 +22,14 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
         const updated_person = {...persons.find(p => p.name === newName), number:newNumber}
         personService
           .updateNumber(updated_person)
+          .catch(e => {
+            setMessage({type:'error',content:`${updated_person.name} already deleted`})
+          })
         personService
           .getAll()
           .then(updatedPersons => setPersons(updatedPersons))
           .then(setMessage({type:'success',content:`${updated_person.name} successfully updated`}))
+          
       }
       setTimeout(() => setMessage({type:'success',content:''}),5000)
       return
@@ -73,6 +77,9 @@ const Persons = ({persons,setPersons,filter,setMessage}) => {
         .then(personService
           .getAll()
           .then(updatedPersons => setPersons(updatedPersons)))
+        .catch(e => {
+          setMessage({type:'error',content:`${person.name} already deleted`})
+        })
       setTimeout(() => setMessage({type:'success',content:''}),5000)
     }
   }
