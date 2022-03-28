@@ -11,10 +11,9 @@ const Filter = ({filter, setFilter}) => {
     </>
   )
 }
-const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumber}) => {
+const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumber,setMessage}) => {
 
   const addPerson = (event) => {
-
     event.preventDefault()
 
     if (persons.map(p => p.name).includes(newName)){
@@ -26,7 +25,9 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
         personService
           .getAll()
           .then(updatedPersons => setPersons(updatedPersons))
+          .then(setMessage({type:'success',content:`${updated_person.name} successfully updated`}))
       }
+      setTimeout(() => setMessage({type:'success',content:''}),5000)
       return
     }
 
@@ -38,8 +39,10 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
     personService
       .addNumber(personObject)
       .then(r => setPersons(persons.concat(r)))
+      .then(setMessage({type:'success',content:`${personObject.name} successfully added`}))
     setNewName('')
     setNewNumber('')
+    setTimeout(() => setMessage({type:'success',content:''}),5000)
   }
   return(
   <>
@@ -60,27 +63,24 @@ const PersonForm = ({persons,setPersons,newName, newNumber,setNewName,setNewNumb
 
 const Persons = ({persons,setPersons,filter,setMessage}) => {
 
-  const handleDelete = (e) => {
-    console.log(e.target.value)
+  const handleDelete = (person) => {
     const sure = window.confirm(`Are you sure?`)
     if (sure){
       personService
-        .deleteNumber(e.target.value)
-        .then(console.log(`id ${e.target.value} successfully deleted`))
-        .then(setMessage({type:'success',content:`id ${e.target.value} successfully deleted`}))
+        .deleteNumber(person.id)
+        .then(console.log(`${person.name} successfully deleted`))
+        .then(setMessage({type:'success',content:`${person.name} successfully deleted`}))
+        .then(personService
+          .getAll()
+          .then(updatedPersons => setPersons(updatedPersons)))
       setTimeout(() => setMessage({type:'success',content:''}),5000)
-      personService
-        .getAll()
-        .then(updatedPersons => setPersons(updatedPersons))
     }
-    
-  
   }
 
   return(
     <>
       <ul style={{listStyleType : 'none'}}>
-        {persons.filter(p => p.name.toLowerCase().includes(filter)).map(person => <li key={person.name}>{person.name} {person.number}<button value={person.id} onClick={handleDelete}>Delete</button></li>)}
+        {persons.filter(p => p.name.toLowerCase().includes(filter)).map(person => <li key={person.name}>{person.name} {person.number}<button onClick={() => handleDelete(person)}>Delete</button></li>)}
       </ul>
     </>
   )
@@ -106,7 +106,7 @@ const App = () => {
       <Filter filter={filter} setFilter={setFilter}/>
       <h2>Phonebook</h2>
       <Notification message={message}/>
-      <PersonForm persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
+      <PersonForm setMessage={setMessage}persons={persons} setPersons={setPersons} newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber}/>
       <h2>Numbers</h2>
       <Persons setMessage={setMessage} setPersons={setPersons} persons={persons} filter={filter}/>
     </div>

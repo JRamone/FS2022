@@ -2,11 +2,23 @@
 const Notification = ({message}) => {
 
     const errorStyle = {
+        paddingTop:'20px',
+        paddingBottom:'20px',
+        height:'80px',
+        textAlign: 'center',
         color:'red',
+        backgroundColor:'Gainsboro',
+        border:'3px solid green'
     }
 
     const successStyle = {
+        paddingTop:'20px',
+        paddingBottom:'20px',
+        height:'80px',
+        textAlign: 'center',
         color:'green',
+        backgroundColor:'Gainsboro',
+        border:'3px solid green'
     }
 
 

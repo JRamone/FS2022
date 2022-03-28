@@ -5,6 +5,7 @@ const url = 'http://localhost:3001/persons'
 
 const getAll = () => {
     const request = axios.get(url)
+    console.log('getall')
     return request.then(r => r.data)
 }
 
